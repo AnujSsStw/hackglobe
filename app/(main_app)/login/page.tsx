@@ -1,5 +1,5 @@
 "use client";
-import { useAuthActions } from "@convex-dev/auth/react";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,29 +7,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { z } from "zod";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useConvexAuth, useQuery } from "convex/react";
-import { useRouter } from "next/navigation";
+import { api } from "@/convex/_generated/api";
+import { useAuthActions } from "@convex-dev/auth/react";
 import { useForm } from "@tanstack/react-form";
 import { zodValidator } from "@tanstack/zod-form-adapter";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { api } from "@/convex/_generated/api";
+import { useConvexAuth, useQuery } from "convex/react";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 
 export default function Login() {
   const [step, setStep] = useState<
     "signIn" | { email: string } | "forgot" | "success"
   >("signIn");
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const user = useQuery(api.user.getCurrentUser, {});
   const router = useRouter();
+
+  const user = useQuery(api.user.getCurrentUser);
 
   useEffect(() => {
     if ((isLoading && !isAuthenticated) || !user) {
@@ -407,7 +408,7 @@ function PasswordResetForm({
   );
 }
 
-export function SignInWithEmailCode({
+function SignInWithEmailCode({
   handleCodeSent,
   provider,
   children,
@@ -500,7 +501,7 @@ const GoogleLogo = () => (
   </svg>
 );
 
-export function CodeInput({ length = 8 }: { length?: number }) {
+function CodeInput({ length = 8 }: { length?: number }) {
   return (
     <div className="mb-4">
       <InputOTP maxLength={8} name="code" id="code">

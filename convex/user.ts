@@ -1,7 +1,7 @@
 import { mutation, query } from "@cvx/_generated/server";
 import { auth } from "@cvx/auth";
-import { Doc } from "./_generated/dataModel";
 import { v } from "convex/values";
+import { Doc } from "./_generated/dataModel";
 
 type User = Doc<"users"> & {
   avatarUrl?: string;
@@ -59,7 +59,6 @@ export const completeOnboarding = mutation({
 });
 
 export const generateUploadUrl = mutation({
-  args: {},
   handler: async (ctx) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) {
@@ -83,7 +82,6 @@ export const updateUserImage = mutation({
 });
 
 export const removeUserImage = mutation({
-  args: {},
   handler: async (ctx) => {
     const userId = await auth.getUserId(ctx);
     if (!userId) {

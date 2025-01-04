@@ -1,18 +1,17 @@
 "use client";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Loader2 } from "lucide-react";
-import { useForm } from "@tanstack/react-form";
-import { zodValidator } from "@tanstack/zod-form-adapter";
-import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { z } from "zod";
+import { api } from "@/convex/_generated/api";
 import { useToast } from "@/hooks/use-toast";
+import { useForm } from "@tanstack/react-form";
+import { zodValidator } from "@tanstack/zod-form-adapter";
+import { useMutation, useQuery } from "convex/react";
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { z } from "zod";
 
-export const username_validator = z
+const username_validator = z
   .string()
   .min(3)
   .max(20)
@@ -24,7 +23,7 @@ export const username_validator = z
   );
 
 export default function Page() {
-  const user = useQuery(api.user.getCurrentUser, {});
+  const user = useQuery(api.user.getCurrentUser);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const completeOnboarding = useMutation(api.user.completeOnboarding);
   const router = useRouter();
